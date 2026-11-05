@@ -1,6 +1,28 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getRecipe } from "../../data/recipes";
+import type { Metadata } from "next";
+import { getRecipe, recipes } from "../../data/recipes";
+
+// Pre-build one page per recipe; ids not listed here become a 404.
+export function generateStaticParams() {
+  return recipes.map((recipe) => ({ id: recipe.id }));
+}
+
+export const dynamicParams = false;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const recipe = getRecipe(id);
+  if (!recipe) return { title: "Recipe not found" };
+  return {
+    title: recipe.title,
+    description: `${recipe.title}: ${recipe.cuisine} recipe ready in ${recipe.time}. See the ingredients and steps.`,
+  };
+}
 
 export default async function RecipePage({
   params,

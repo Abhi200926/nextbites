@@ -13,8 +13,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "NextBites",
-  description: "Search recipes and cook your next favourite meal.",
+  title: {
+    default: "NextBites | Find your next favourite recipe",
+    template: "%s | NextBites",
+  },
+  description:
+    "Search recipes by name or cuisine and cook your next favourite meal with simple ingredient lists and step-by-step instructions.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
