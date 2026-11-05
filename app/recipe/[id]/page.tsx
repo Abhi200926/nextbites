@@ -3,12 +3,11 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getRecipe, recipes } from "../../data/recipes";
 
-// Pre-build one page per recipe; ids not listed here become a 404.
+// Pre-build one page per recipe. With a static export, any id not listed
+// here has no page and falls through to the 404 page.
 export function generateStaticParams() {
   return recipes.map((recipe) => ({ id: recipe.id }));
 }
-
-export const dynamicParams = false;
 
 export async function generateMetadata({
   params,
